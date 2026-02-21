@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body class="auth-body">
+
+<div class="auth-box">
+  <h2>Login</h2>
+  <br>
+
+<input type="email" id="login-email" placeholder="Email">
+
+  <!-- PASSWORD -->
+  <div class="password-box">
+    <input type="password" id="login-password" placeholder="Password">
+    <span class="toggle-eye">👁️</span>
+  </div>
+
+  <!-- LOGIN BUTTON -->
+  <button class="auth-btn" id="login-btn">Login</button>
+
+  <p class="auth-link">
+    Forgot password?
+  </p>
+
+  <p class="auth-link">
+    Don't have an account?
+    <a href="signup.html">Sign up</a>
+  </p>
+</div>
+
+
+    <!-- PAGE KA SAARA HTML UPAR -->
+
+<script>
+    document.querySelectorAll(".toggle-eye").forEach(eye => {
+        eye.addEventListener("click", function () {
+            const input = this.previousElementSibling;
+            if (input.type === "password") {
+                input.type = "text";
+                this.textContent = "🙈";
+            } else {
+                input.type = "password";
+                this.textContent = "👁️";
+            }
+        });
+    });
+    </script>
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Expense - Expense Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="initApp()">
+    <header>
+        <nav class="navbar">
+            <a href="dashboard.html">Back to Dashboard</a>
+        </nav>
+    </header>
+
+    <section class="form-card">
+        <h2>Add New Expense</h2>
+        <form id="expense-form">
+            <label>Date: <input type="date" id="date" required></label>
+            <label>Category:
+                <select id="category" required>
+                    <option value="Food">Food</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Bills">Bills</option>
+                    <option value="Others">Others</option>
+                </select>
+            </label>
+            <label>Amount: <input type="number" id="amount" min="" required></label>
+            <label>Notes: <input type="text" id="notes"></label>
+            <button type="submit" onclick="return addExpense(event)">Add Expense</button>
+        </form>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

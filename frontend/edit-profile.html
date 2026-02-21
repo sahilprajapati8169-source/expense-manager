@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="auth-body">
+
+<div class="form-card auth-box">
+  <h2>Edit Profile</h2>
+
+  <input type="text" id="set-name" placeholder="Full Name">
+
+  <input type="email" id="set-email" placeholder="Email" disabled>
+
+  <input type="text" id="set-mobile" placeholder="Mobile Number">
+
+  <input type="text" id="set-country" placeholder="Country">
+
+  <button class="auth-btn" onclick="saveProfile()">Save Changes</button>
+
+  <p class="auth-link">
+    <a href="dashboard.html">← Back to Dashboard</a>
+  </p>
+</div>
+
+<script src="script.js"></script>
+<script>
+  loadSettings();   // page load pe data fill karega
+</script>
+
+</body>
+</html>

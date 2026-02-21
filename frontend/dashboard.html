@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Dashboard - Expense Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="header">
+  <nav class="navbar">
+
+    <!-- LEFT -->
+    <div class="nav-left">
+      <div id="hamburger" class="hamburger">☰</div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="nav-right">
+      <!-- PROFILE BUTTON -->
+<div class="profile-wrapper">
+  <button class="profile-btn" id="profile-btn">
+    <img src="image/profile.png" alt="profile">
+    <span id="nav-username">User</span>
+  </button>
+
+  <!-- PROFILE POPUP -->
+  <div class="profile-popup" id="profile-popup">
+    <div class="profile-top">
+      <img src="image/profile.png" class="popup-avatar">
+      <div>
+        <h4 id="p-name">User Name</h4>
+        <p id="p-email">email@gmail.com</p>
+      </div>
+    </div>
+
+    <div class="profile-info">
+      <div><span>📱</span> <b id="p-mobile"></b></div>
+      <div><span>🌍</span> <b id="p-country"></b></div>
+    </div>
+
+    <div class="profile-actions">
+      <button id="edit-profile">✏️ Edit Profile</button>
+      <button id="logout-profile" class="danger">🚪 Logout</button>
+    </div>
+  </div>
+</div>
+
+
+  </nav>
+</header>
+
+<!-- SIDEBAR -->
+<div id="overlay" class="overlay"></div>
+
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-header">
+    <h3>Menu</h3>
+    <span id="sidebar-close">✕</span>
+  </div>
+
+  <a href="exphistory.html">📊 History</a>
+  <a href="setting.html">⚙️ Settings</a>
+  <a href="notes.html">📝 Notes</a>
+  <a href="trash.html">🗑 Deleted Expenses</a>
+
+  <a href="#" class="logout">🚪 Logout</a>
+
+</aside>
+
+    <!-- Summary Cards -->
+    <div>
+    <section class="summary-cards">
+        <div class="card">
+  <div class="card-header">
+    <span class="icon expense">💸</span>
+    <p>Total Expense</p>
+  </div>
+  <span class="value" id="total-expense">0</span>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <span class="icon balance">💰</span>
+    <p>Balance</p>
+  </div>
+  <span class="value" id="balance">0</span>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <span class="icon limit">🎯</span>
+    <p>Limit</p>
+  </div>
+  <span class="value" id="total-limit">0</span>
+</div>
+
+    </section>
+    </div>
+
+    <!-- Action Buttons -->
+    <section class="actions">
+        <a href="add-expense.html" class="btn">➕ Add Expense</a>
+        <button class="btn" id="open-calculator">🧮 Calculator</button>
+
+
+        <button class="btn" id="open-notes">📝 Notes</button>
+
+        <a href="set-limit.html" class="btn">🎯 Set Limit</a>
+    </section>
+
+    <!-- Recent Transactions -->
+    <section class="transactions">
+        <h2 id="reset-transactions" style="cursor:pointer;">
+  Recent Expense Transactions
+</h2>
+
+        <table id="transactions-table">
+            <thead>
+                <tr><th>Date</th><th>Category</th><th>Notes</th><th>Amount</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <!-- Graphs & Analytics -->
+    <section class="analytics">
+        <h2>Expense Analytics</h2>
+        <div class="top-graphs">
+            <div class="graph-box">
+                <h3>Expense Overview</h3>
+                <select id="time-filter" onchange="updateOverviewChart()">
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly" selected>Monthly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+                <canvas id="overview-chart"></canvas>
+            </div>
+            <div class="graph-box">
+                <h3>Expense Growth</h3>
+                <canvas id="growth-chart"></canvas>
+                <p id="growth-insight" style="margin-top:12px;color:#555;font-weight:500;"></p>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <h3 class="section-title">Category-wise Distribution</h3>
+
+            <div class="category-grid" id="category-charts">
+            <!-- JS se cards inject honge -->
+        </div>
+    </div>
+
+    </section>
+
+
+<!-- FLOATING CALCULATOR -->
+<!-- Calculator Launcher -->
+
+<!-- Calculator -->
+<div id="calculator">
+  <div id="calc-header">
+    <span>Smart Calculator</span>
+    <button id="calc-close">✕</button>
+  </div>
+
+  <div id="calc-body">
+    <!-- Display -->
+    <div id="calc-display-box">
+      <div id="calc-expression"></div>
+      <input id="calc-display" value="0" readonly />
+    </div>
+
+    <!-- History -->
+    <div id="calc-history">
+      <div class="history-title">Recent (3)</div>
+      <ul id="history-list"></ul>
+    </div>
+
+    <!-- Buttons -->
+    <div id="calc-buttons">
+      <button class="func" onclick="clearCalc()">C</button>
+      <button class="func" onclick="backspace()">⌫</button>
+      <button class="func" onclick="press('%')">%</button>
+      <button class="op" onclick="press('/')">÷</button>
+
+      <button onclick="press('7')">7</button>
+      <button onclick="press('8')">8</button>
+      <button onclick="press('9')">9</button>
+      <button class="op" onclick="press('*')">×</button>
+
+      <button onclick="press('4')">4</button>
+      <button onclick="press('5')">5</button>
+      <button onclick="press('6')">6</button>
+      <button class="op" onclick="press('-')">−</button>
+
+      <button onclick="press('1')">1</button>
+      <button onclick="press('2')">2</button>
+      <button onclick="press('3')">3</button>
+      <button class="op" onclick="press('+')">+</button>
+
+      <button class="zero" onclick="press('0')">0</button>
+      <button onclick="press('.')">.</button>
+      <button class="equal" onclick="calculate()">=</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTES POPUP -->
+<div id="notes-popup" class="notes-modal">
+  <div class="notes-card">
+    
+    <div class="notes-header">
+      <h3>📝 Quick Notes</h3>
+      <span class="notes-date" id="notes-date"></span>
+      <button class="notes-close" onclick="toggleNotes()">✕</button>
+    </div>
+
+    <div class="notes-body">
+
+  <div class="note-options">
+    <select id="note-tag">
+      <option value="Work">Work</option>
+      <option value="Personal">Personal</option>
+      <option value="Idea">Idea</option>
+      <option value="Important">Important</option>
+    </select>
+
+    <select id="note-color">
+      <option value="blue">Blue</option>
+      <option value="green">Green</option>
+      <option value="yellow">Yellow</option>
+      <option value="pink">Pink</option>
+      <option value="purple">Purple</option>
+    </select>
+  </div>
+
+  <!-- ✅ ONLY ONE TEXTAREA -->
+  <textarea
+    id="notes-text"
+    placeholder="Write something important to remember…"
+  ></textarea>
+
+</div>
+
+
+    <div class="notes-footer">
+      <button class="notes-cancel" onclick="toggleNotes()">Cancel</button>
+      <button class="notes-save" onclick="saveNote()">Save Note</button>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+    <script src="script.js"></script>
+
+
+</body>
+</html>

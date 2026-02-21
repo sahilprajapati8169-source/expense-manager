@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="notes-page">
+
+  <!-- HEADER -->
+  <div class="notes-header-bar">
+    <button class="back-btn" onclick="history.back()">← Back</button>
+    <h2>📝 Saved Notes</h2>
+  </div>
+
+  <!-- NOTES LIST -->
+  <div class="notes-container" id="notesContainer"></div>
+
+  <!-- EDIT MODAL -->
+  <div class="notes-modal" id="editModal">
+    <div class="notes-card">
+      <div class="notes-header">
+        <h3>Edit Note</h3>
+        <button class="notes-close" onclick="closeEdit()">✕</button>
+      </div>
+
+      <div class="notes-body">
+        <textarea id="editText"></textarea>
+      </div>
+
+      <div class="notes-footer">
+        <button class="notes-cancel" onclick="closeEdit()">Cancel</button>
+        <button class="notes-save" onclick="saveEdit()">Update</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="notes.js"></script>
+</body>
+</html>

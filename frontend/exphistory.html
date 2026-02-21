@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <title>Expense History</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="expense-table-section">
+    <!-- BACK BUTTON -->
+<div class="history-header">
+    <button class="back-btn" onclick="goBackToDashboard()">
+        ← Back
+    </button>
+</div>
+
+    <h2>All Expense History</h2>
+
+    <table class="expense-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Notes</th>
+                <th>Amount</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody id="fullHistoryTable"></tbody>
+    </table>
+</section>
+
+<!-- EDIT EXPENSE MODAL -->
+<div id="edit-modal" class="edit-overlay">
+  <div class="edit-card">
+
+    <h2>Edit Expense</h2>
+
+    <div class="form-group">
+      <label>Date</label>
+      <input type="date" id="edit-date">
+    </div>
+
+    <div class="form-group">
+      <label>Category</label>
+      <select id="edit-category">
+        <option>Food</option>
+        <option>Travel</option>
+        <option>Rent</option>
+        <option>Shopping</option>
+        <option>Bills</option>
+        <option>Others</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Notes</label>
+      <input type="text" id="edit-notes" placeholder="Add a note">
+    </div>
+
+    <div class="form-group">
+      <label>Amount</label>
+      <input type="number" id="edit-amount">
+    </div>
+
+    <div class="edit-actions">
+      <button class="btn cancel" onclick="closeEditPopup()">Cancel</button>
+      <button class="btn delete" onclick="deleteExpense()">Delete</button>
+      <button class="btn save" onclick="saveEdit()">Save</button>
+    </div>
+
+  </div>
+</div>
+
+
+
+<script>
+function goBackToDashboard() {
+    window.location.href = "dashboard.html";
+}
+</script>
+<!-- UNDO SNACKBAR -->
+<div id="undo-snackbar">
+  Expense deleted
+  <button onclick="undoDelete()">UNDO</button>
+</div>
+
+
+<script src="script.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    console.log("✅ History DOM ready");
+    renderHistoryPage();
+  });
+</script>
+
+</body>
+</html>

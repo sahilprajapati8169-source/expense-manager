@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings - Expense Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadSettings()">
+
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+        </nav>
+    </header>
+
+    <!-- Settings Section -->
+    <section class="form-card settings-container">
+        <h2>⚙️ Settings</h2>
+
+        <!-- Profile Settings -->
+        <div class="settings-card">
+            <h3>👤 Profile Settings</h3>
+
+            <label>Name
+                <input type="text" id="set-name">
+            </label>
+
+            <label>Email
+                <input type="email" id="set-email" disabled>
+            </label>
+
+            <label>Mobile
+                <input type="text" id="set-mobile">
+            </label>
+
+            <label>Country
+                <input type="text" id="set-country">
+            </label>
+
+            <button onclick="saveProfile()">Save Profile</button>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="settings-card danger-zone">
+            <h3>🚨 Danger Zone</h3>
+            <button class="danger-btn" onclick="clearAllData()">Clear All Expense Data</button>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
