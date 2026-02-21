@@ -1,7 +1,7 @@
-const API =
+const API = 
   window.location.hostname === "localhost"
     ? "http://localhost:5000"
-    : "https://your-backend.onrender.com";
+    : "https://expense-manager-backend-2z6k.onrender.com";
 
 let isAddingExpense = false; // ✅ DUPLICATE ROKNE KE LIYE
 
