@@ -122,7 +122,7 @@ function initApp() {
     renderTransactions();
     initCharts();
     renderCategoryCharts(getCategorySummary());
-  } else if (window.location.pathname.includes('set-limit.html')) {
+  } else if (window.location.pathname.includes('set-limit')) {
     loadLimitsForm();
   } else if (window.location.pathname.includes('setting.html')) {
     loadSettings();
