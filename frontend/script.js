@@ -124,7 +124,9 @@ function initApp() {
     initCharts();
     renderCategoryCharts(getCategorySummary());
   } else if (window.location.pathname.includes('set-limit')) {
+  setTimeout(() => {
     loadLimitsForm();
+  }, 0);
   } else if (window.location.pathname.includes('setting.html')) {
     loadSettings();
   }
