@@ -3,6 +3,8 @@ const API =
     ? "http://localhost:5000"
     : "https://expense-manager-backend-2z6k.onrender.com";
 
+    const categories = ['Food', 'Travel', 'Rent', 'Shopping', 'Bills', 'Others'];
+
 let isAddingExpense = false; // ✅ DUPLICATE ROKNE KE LIYE
 
 // 🔐 AUTH GUARD (GLOBAL)
@@ -88,7 +90,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 let expenses = [];
 let totalLimit = parseFloat(localStorage.getItem('totalLimit')) || 0;
 let categoryLimits = JSON.parse(localStorage.getItem('categoryLimits')) || {};
-const categories = ['Food', 'Travel', 'Rent', 'Shopping', 'Bills', 'Others'];
 
 // Charts
 let overviewChart, growthChart;
@@ -123,11 +124,8 @@ function initApp() {
     renderTransactions();
     initCharts();
     renderCategoryCharts(getCategorySummary());
-  } else if (window.location.pathname.includes('set-limit')) {
-  setTimeout(() => {
-    loadLimitsForm();
-  }, 0);
-  } else if (window.location.pathname.includes('setting.html')) {
+  }
+   else if (window.location.pathname.includes('setting.html')) {
     loadSettings();
   }
 
@@ -1505,7 +1503,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
+// ✅ FINAL SAFE CALL FOR SET-LIMIT PAGE
+document.addEventListener("DOMContentLoaded", () => {
+  if (document.getElementById("category-limits")) {
+    loadLimitsForm();
+  }
+});
 // Event Listeners
 document.addEventListener("input", updateRemaining);
 
