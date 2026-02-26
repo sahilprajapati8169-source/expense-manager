@@ -7,6 +7,7 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
+const limitRoutes = require("./routes/limitRoutes");
 
 const app = express();
 
@@ -20,6 +21,7 @@ connectDB();
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/expenses", expenseRoutes);
+app.use("/api/limits", limitRoutes);
 
 app.get("/", (req, res) => {
   res.send("Expense Manager Backend Running 🚀");

@@ -27,6 +27,7 @@ async function checkAuth() {
 
     const user = await res.json();
     localStorage.setItem("userData", JSON.stringify(user));
+    await loadLimitsFromBackend();
 
   } catch (err) {
     console.warn("🔒 Auth failed, logging out");
@@ -985,26 +986,64 @@ function getCategoryTotal() {
   return total;
 }
 
-function saveLimits() {
-  const totalMonthlyLimit = Number(document.getElementById("total-limit-input").value) || 0;
-  const categoryTotal = getCategoryTotal();
+async function saveLimits() {
+  const token = localStorage.getItem("token");
 
-  if (categoryTotal !== totalMonthlyLimit) {
-    alert(`❌ Category limits total (₹${categoryTotal}) must equal Monthly Limit (₹${totalMonthlyLimit})`);
-    return;
-  }
+  const totalMonthlyLimit = Number(
+    document.getElementById("total-limit-input").value
+  );
 
-  localStorage.setItem("totalLimit", totalMonthlyLimit);
-  categoryLimits = {};
-  
+  const categoryLimits = {};
   document.querySelectorAll("#category-limits input").forEach(input => {
-    const cat = input.dataset.cat;
-    categoryLimits[cat] = Number(input.value) || 0;
+    categoryLimits[input.dataset.cat] = Number(input.value) || 0;
   });
 
-  localStorage.setItem("categoryLimits", JSON.stringify(categoryLimits));
-  alert("✅ Limits saved successfully!");
-  window.location.href = "dashboard.html";
+  try {
+    const res = await fetch(`${API}/api/limits`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        totalLimit: totalMonthlyLimit,
+        categoryLimits
+      })
+    });
+
+    if (!res.ok) throw new Error();
+
+    alert("✅ Limits saved (cloud synced)");
+    window.location.href = "dashboard.html";
+
+  } catch {
+    alert("❌ Failed to save limits");
+  }
+}
+
+async function loadLimitsFromBackend() {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  try {
+    const res = await fetch(`${API}/api/limits`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    const data = await res.json();
+    if (!data) return;
+
+    localStorage.setItem("totalLimit", data.totalLimit);
+    localStorage.setItem(
+      "categoryLimits",
+      JSON.stringify(data.categoryLimits)
+    );
+
+  } catch (err) {
+    console.error("Failed to load limits");
+  }
 }
 
 function updateRemaining() {
