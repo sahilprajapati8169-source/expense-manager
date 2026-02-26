@@ -1,32 +1,41 @@
 const express = require("express");
 const router = express.Router();
+const auth = require("../middleware/auth");
 const Limit = require("../models/Limit");
-const auth = require("../middleware/authMiddleware");
 
-// 🔹 GET limits (auto load on login)
-router.get("/", auth, async (req, res) => {
+// ✅ SAVE or UPDATE limits
+router.post("/", auth, async (req, res) => {
   try {
-    const limit = await Limit.findOne({ user: req.user.id });
-    res.json(limit || null);
+    const { totalLimit, categoryLimits } = req.body;
+
+    let limits = await Limit.findOne({ user: req.user.id });
+
+    if (limits) {
+      limits.totalLimit = totalLimit;
+      limits.categoryLimits = categoryLimits;
+    } else {
+      limits = new Limit({
+        user: req.user.id,
+        totalLimit,
+        categoryLimits
+      });
+    }
+
+    await limits.save();
+    res.json({ message: "Limits saved successfully", limits });
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    console.error(err);
+    res.status(500).json({ message: "Failed to save limits" });
   }
 });
 
-// 🔹 SAVE / UPDATE limits
-router.post("/", auth, async (req, res) => {
-  const { totalLimit, categoryLimits } = req.body;
-
+// ✅ GET limits (auto-load after login)
+router.get("/", auth, async (req, res) => {
   try {
-    const updated = await Limit.findOneAndUpdate(
-      { user: req.user.id },
-      { totalLimit, categoryLimits },
-      { new: true, upsert: true }
-    );
-
-    res.json(updated);
+    const limits = await Limit.findOne({ user: req.user.id });
+    res.json(limits || {});
   } catch (err) {
-    res.status(500).json({ message: "Failed to save limits" });
+    res.status(500).json({ message: "Failed to load limits" });
   }
 });
 
