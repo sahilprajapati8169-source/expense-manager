@@ -89,7 +89,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 // Data Structures
 let expenses = [];
 let totalLimit = parseFloat(localStorage.getItem('totalLimit')) || 0;
-let categoryLimits = JSON.parse(localStorage.getItem('categoryLimits')) || {};
+let categoryLimits = {};
+try {
+  const stored = localStorage.getItem("categoryLimits");
+  if (stored && stored !== "undefined") {
+    categoryLimits = JSON.parse(stored);
+  }
+} catch {}
 
 // Charts
 let overviewChart, growthChart;
@@ -1136,99 +1142,112 @@ function validateEmail(email) {
 }
 
 // LOGIN LOGIC
-document.getElementById("login-btn")?.addEventListener("click", async () => {
-  const email = document.getElementById("login-email")?.value.trim();
-  const password = document.getElementById("login-password")?.value.trim();
+document.addEventListener("DOMContentLoaded", () => {
 
-  if (!email || !password) {
-    alert("Email & Password required");
-    return;
-  }
+  const loginBtn = document.getElementById("login-btn");
 
-  try {
-    const res = await fetch(`${API}/api/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
+  if (loginBtn) {
+    loginBtn.addEventListener("click", async () => {
+
+      const email = document.getElementById("login-email")?.value.trim();
+      const password = document.getElementById("login-password")?.value.trim();
+
+      if (!email || !password) {
+        alert("Email & Password required");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API}/api/auth/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.message || "Login failed");
+          return;
+        }
+
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userData", JSON.stringify(data.user));
+        alert("Login successful ✅");
+        window.location.href = "dashboard.html";
+
+      } catch {
+        alert("Server error");
+      }
+
     });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.message || "Login failed");
-      return;
-    }
-
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("userData", JSON.stringify(data.user));
-    alert("Login successful ✅");
-    window.location.href = "dashboard.html";
-  } catch (err) {
-    alert("Server error");
   }
+
 });
 
 // SIGNUP LOGIC
-document.getElementById("signup-btn")?.addEventListener("click", async () => {
-  const name = document.getElementById("signup-name")?.value.trim();
-  const email = document.getElementById("signup-email")?.value.trim();
-  const password = document.getElementById("signup-password")?.value.trim();
-  const confirm = document.getElementById("signup-confirm")?.value.trim();
-  const terms = document.getElementById("terms")?.checked;
+document.addEventListener("DOMContentLoaded", () => {
 
-  if (!name || !email || !password || !confirm) {
-    alert("Fill all fields");
-    return;
-  }
+  const signupBtn = document.getElementById("signup-btn");
 
-  if (password !== confirm) {
-    alert("Passwords do not match");
-    return;
-  }
+  if (signupBtn) {
+    signupBtn.addEventListener("click", async () => {
 
-  if (!terms) {
-    alert("Please accept Terms & Privacy");
-    return;
-  }
+      const name = document.getElementById("signup-name")?.value.trim();
+      const email = document.getElementById("signup-email")?.value.trim();
+      const password = document.getElementById("signup-password")?.value.trim();
+      const confirm = document.getElementById("signup-confirm")?.value.trim();
+      const terms = document.getElementById("terms")?.checked;
 
-  try {
-    const iti = window.phoneInput;
+      if (!name || !email || !password || !confirm) {
+        alert("Fill all fields");
+        return;
+      }
 
-// ❌ agar phone input hi nahi hai
-if (!iti) {
-  alert("Phone input not initialized");
-  return;
-}
+      if (password !== confirm) {
+        alert("Passwords do not match");
+        return;
+      }
 
-// ❌ country-wise validation
-if (!iti.isValidNumber()) {
-  alert("❌ Please enter a valid mobile number for selected country");
-  return;
-}
+      if (!terms) {
+        alert("Please accept Terms & Privacy");
+        return;
+      }
 
-// ✅ SAFE & CORRECT DATA
-const mobile = iti.getNumber(); // +91XXXXXXXXXX (E.164)
-const countryData = iti.getSelectedCountryData();
-const country = countryData.name;
+      try {
+        const iti = window.phoneInput;
 
-    const res = await fetch(`${API}/api/auth/signup`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password, mobile, country })
+        if (!iti || !iti.isValidNumber()) {
+          alert("Enter valid mobile number");
+          return;
+        }
+
+        const mobile = iti.getNumber();
+        const country = iti.getSelectedCountryData().name;
+
+        const res = await fetch(`${API}/api/auth/signup`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password, mobile, country })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.message || "Signup failed");
+          return;
+        }
+
+        alert("Signup successful ✅");
+        window.location.href = "login.html";
+
+      } catch {
+        alert("Server error");
+      }
+
     });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.message || "Signup failed");
-      return;
-    }
-
-    alert("Signup successful ✅");
-    window.location.href = "login.html";
-  } catch (err) {
-    alert("Server error");
   }
+
 });
 
 // ================= NOTES PAGE LOGIC =================
