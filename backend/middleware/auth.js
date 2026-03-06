@@ -12,8 +12,10 @@ module.exports = (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // 👇 yahi line important hai
-    req.user = decoded;
+    // ✅ safe user id
+    req.user = {
+      id: decoded.id || decoded._id
+    };
 
     next();
   } catch (err) {
