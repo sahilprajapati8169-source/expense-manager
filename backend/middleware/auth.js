@@ -14,8 +14,8 @@ module.exports = (req, res, next) => {
 
     // ✅ safe user id
     req.user = {
-      id: decoded.id || decoded._id
-    };
+  id: decoded.userId
+};
 
     next();
   } catch (err) {
