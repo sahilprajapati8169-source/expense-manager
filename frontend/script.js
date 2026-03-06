@@ -1046,6 +1046,7 @@ async function loadLimitsFromBackend() {
       "categoryLimits",
       JSON.stringify(data.categoryLimits)
     );
+    updateSummary();
 
   } catch (err) {
     console.error("Failed to load limits");
