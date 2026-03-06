@@ -16,7 +16,7 @@ router.post("/", auth, async (req, res) => {
     
     // Optional: Check for recent duplicate (within 5 seconds)
     const recentDuplicate = await Expense.findOne({
-      user: req.userId,
+      user: req.user.id,
       title,
       amount,
       date,
@@ -32,7 +32,7 @@ router.post("/", auth, async (req, res) => {
     
     const expense = await Expense.create({
       ...req.body,
-      user: req.userId
+      user: req.user.id
     });
     
     res.status(201).json(expense);
@@ -46,7 +46,7 @@ router.post("/", auth, async (req, res) => {
 router.get("/", auth, async (req, res) => {
   try {
     const expenses = await Expense.find({
-      user: req.userId,
+      user: req.user.id,
       deleted: { $ne: true }
     }).sort({ createdAt: -1 });
 
@@ -60,7 +60,7 @@ router.get("/", auth, async (req, res) => {
 router.get("/trash", auth, async (req, res) => {
   try {
     const trash = await Expense.find({
-      user: req.userId,
+      user: req.user.id,
       deleted: true
     }).sort({ deletedAt: -1 });
 
@@ -75,7 +75,7 @@ router.get("/trash", auth, async (req, res) => {
 router.put("/trash/all", auth, async (req, res) => {
   try {
     await Expense.updateMany(
-      { user: req.userId, deleted: { $ne: true } },
+      { user: req.user.id, deleted: { $ne: true } },
       { 
         deleted: true,
         deletedAt: new Date()
@@ -94,7 +94,7 @@ router.get("/:id", auth, async (req, res) => {
   try {
     const expense = await Expense.findOne({
       _id: req.params.id,
-      user: req.userId
+      user: req.user.id
     });
 
     if (!expense) {
@@ -115,7 +115,7 @@ router.get("/:id", auth, async (req, res) => {
 router.put("/:id", auth, async (req, res) => {
   try {
     const exp = await Expense.findOneAndUpdate(
-      { _id: req.params.id, user: req.userId },
+      { _id: req.params.id, user: req.user.id },
       req.body,
       { new: true }
     );
@@ -135,7 +135,7 @@ router.put("/:id", auth, async (req, res) => {
 router.delete("/:id", auth, async (req, res) => {
   try {
     const exp = await Expense.findOneAndUpdate(
-      { _id: req.params.id, user: req.userId },
+      { _id: req.params.id, user: req.user.id },
       { deleted: true, deletedAt: new Date() },
       { new: true }
     );
@@ -157,7 +157,7 @@ router.delete("/:id", auth, async (req, res) => {
 router.put("/:id/restore", auth, async (req, res) => {
   try {
     const exp = await Expense.findOneAndUpdate(
-      { _id: req.params.id, user: req.userId, deleted: true },
+      { _id: req.params.id, user: req.user.id, deleted: true },
       { deleted: false, deletedAt: null },
       { new: true }
     );
