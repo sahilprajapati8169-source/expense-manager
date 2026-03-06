@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
-const Limit = require("../models/Limit");
+const Limit = require("../models/limit");
 
 // ✅ SAVE or UPDATE limits
 router.post("/", auth, async (req, res) => {
   try {
     const { totalLimit, categoryLimits } = req.body;
 
-    // ✅ Safe user id
-    const userId = req.user?._id || req.user?.id;
+    // SAFE USER ID
+    const userId = req.user?.id || req.user?._id;
 
     if (!userId) {
       return res.status(400).json({ message: "User ID missing" });
@@ -41,12 +41,20 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-// ✅ GET limits (auto-load after login)
+// ✅ GET limits
 router.get("/", auth, async (req, res) => {
   try {
-    const limits = await Limit.findOne({ user: req.user.id });
+    const userId = req.user?.id || req.user?._id;
+
+    if (!userId) {
+      return res.status(400).json({ message: "User ID missing" });
+    }
+
+    const limits = await Limit.findOne({ user: userId });
+
     res.json(limits || {});
   } catch (err) {
+    console.error("LOAD LIMIT ERROR:", err);
     res.status(500).json({ message: "Failed to load limits" });
   }
 });
