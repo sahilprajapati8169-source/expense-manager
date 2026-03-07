@@ -145,7 +145,13 @@ if (monthInput) {
 });
 
   }
+const passwordInput = document.getElementById("signup-password");
 
+if (passwordInput) {
+  passwordInput.addEventListener("input", () => {
+    checkPasswordStrength(passwordInput.value);
+  });
+}
 
 
   if (window.location.pathname.includes('dashboard.html')) {
@@ -335,6 +341,34 @@ if (monthInput) {
       }
     });
   }
+}
+
+function checkPasswordStrength(password) {
+
+  let strength = 0;
+
+  if (password.length >= 6) strength++;
+  if (/[A-Z]/.test(password)) strength++;
+  if (/[0-9]/.test(password)) strength++;
+  if (/[@$!%*?&]/.test(password)) strength++;
+
+  const indicator = document.getElementById("password-strength");
+
+  if (!indicator) return;
+
+  if (strength <= 1) {
+    indicator.textContent = "Weak password";
+    indicator.style.color = "red";
+  }
+  else if (strength === 2 || strength === 3) {
+    indicator.textContent = "Medium password";
+    indicator.style.color = "orange";
+  }
+  else {
+    indicator.textContent = "Strong password";
+    indicator.style.color = "green";
+  }
+
 }
 
 // Animation counter
