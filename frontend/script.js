@@ -923,18 +923,42 @@ function updateCategoryCharts() {
   });
 
   const summary = categories.map(cat => {
-    const spent = filteredExpenses
-      .filter(e => e.category === cat)
-      .reduce((sum, e) => sum + e.amount, 0);
 
-    return {
-      name: cat,
-      spent,
-      limit: categoryLimits[cat] || 0
-    };
-  });
+  const spent = filteredExpenses
+    .filter(e => e.category === cat)
+    .reduce((sum, e) => sum + e.amount, 0);
+
+  const monthlyLimit = categoryLimits[cat] || 0;
+
+  const calculatedLimit = getCategoryLimitByPeriod(monthlyLimit, filter);
+
+  return {
+    name: cat,
+    spent,
+    limit: calculatedLimit
+  };
+});
 
   renderCategoryCharts(summary);
+}
+
+
+function getCategoryLimitByPeriod(monthlyLimit, period) {
+  if (!monthlyLimit) return 0;
+
+  switch (period) {
+    case "weekly":
+      return monthlyLimit / 4;
+
+    case "monthly":
+      return monthlyLimit;
+
+    case "yearly":
+      return monthlyLimit * 12;
+
+    default:
+      return monthlyLimit;
+  }
 }
 
 function renderCategoryCharts(categoryData) {
