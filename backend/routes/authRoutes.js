@@ -151,7 +151,7 @@ user.resetTokenExpire = Date.now()+3600000;
 await user.save();
 
 const link =
-`https://yourfrontend/reset-password.html?token=${token}`;
+`https://fluffy-peony-3a5444.netlify.app/reset-password.html?token=${token}`;
 
 try {
 
