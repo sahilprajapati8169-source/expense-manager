@@ -3620,3 +3620,15 @@ h2 {
   font-size: 14px;
   justify-content: flex-start;
 }
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 0;
+  font-size: 14px;
+}
+
+.checkbox input {
+  width: auto;
+  margin: 0;
+}
