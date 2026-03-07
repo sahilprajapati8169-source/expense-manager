@@ -12,7 +12,11 @@ const limitRoutes = require("./routes/limitRoutes");
 const app = express();
 
 // middlewares
-app.use(cors());
+app.use(cors({
+  origin: "https://fluffy-peony-3a5444.netlify.app",
+  methods: ["GET","POST","PUT","DELETE"],
+  credentials: true
+}));
 app.use(express.json());
 
 // DB CONNECT
