@@ -131,9 +131,13 @@ const sendEmail = require("../utils/sendEmail");
 
 router.post("/forgot-password", async (req,res)=>{
 
-const {email} = req.body;
+const { email } = req.body;
 
-const user = await User.findOne({email});
+if(!email){
+return res.status(400).json({message:"Email required"});
+}
+
+const user = await User.findOne({ email });
 
 if(!user){
 return res.status(404).json({message:"User not found"});
@@ -147,7 +151,7 @@ user.resetTokenExpire = Date.now()+3600000;
 await user.save();
 
 const link =
-`http://localhost:5000/reset-password/${token}`;
+`https://yourfrontend/reset-password.html?token=${token}`;
 
 await sendEmail(
 email,
@@ -174,7 +178,15 @@ router.post("/reset-password/:token", async (req, res) => {
       });
     }
 
-    const hashed = await bcrypt.hash(req.body.password, 10);
+    const { password } = req.body;
+
+if(!password || password.length < 8){
+return res.status(400).json({
+message:"Password must be at least 8 characters"
+});
+}
+
+    const hashed = await bcrypt.hash(password, 10);
 
     user.password = hashed;
     user.resetToken = undefined;
