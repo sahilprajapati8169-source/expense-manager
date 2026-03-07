@@ -8,22 +8,25 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+
+const { Resend } = require("resend");
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 const sendEmail = async (to, subject, text) => {
   try {
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to,
-      subject,
-      text
+    await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: to,
+      subject: subject,
+      text: text
     });
 
-    console.log("Email sent");
+    console.log("Email sent successfully");
 
   } catch (error) {
-
     console.error("Email error:", error);
-
   }
 };
 
