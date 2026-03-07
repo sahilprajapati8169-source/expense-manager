@@ -26,17 +26,15 @@
 
   <small class="error" id="mobile-error"></small>
   <div class="password-box">
-    <div class="password-box">
-    <input type="password" id="signup-password" placeholder="Password">
-    <span class="toggle-eye">👁️</span>
+  <input type="password" id="signup-password" placeholder="Password">
+  <span class="toggle-eye">👁️</span>
 </div>
 
 </div>
 
-  <div class="password-box">
-    <div class="password-box">
-    <input type="password" id="signup-confirm" placeholder="Confirm Password">
-    <span class="toggle-eye">👁️</span>
+   <div class="password-box">
+  <input type="password" id="signup-confirm" placeholder="Confirm Password">
+  <span class="toggle-eye">👁️</span>
 </div>
 
 </div>
@@ -54,28 +52,6 @@
     <a href="login.html">Login</a>
   </p>
 </div>
-
-
-
-
-
-    <!-- PAGE KA SAARA HTML UPAR -->
-
-    <script>
-    document.querySelectorAll(".toggle-eye").forEach(eye => {
-        eye.addEventListener("click", function () {
-            const input = this.previousElementSibling;
-            if (input.type === "password") {
-                input.type = "text";
-                this.textContent = "🙈";
-            } else {
-                input.type = "password";
-                this.textContent = "👁️";
-            }
-        });
-    });
-    </script>
-
     <script src="script.js"></script>
 
 

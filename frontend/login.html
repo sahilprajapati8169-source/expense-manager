@@ -19,9 +19,9 @@
 
   <!-- PASSWORD -->
   <div class="password-box">
-    <input type="password" id="login-password" placeholder="Password">
-    <span class="toggle-eye">👁️</span>
-  </div>
+  <input type="password" id="login-password" placeholder="Password">
+  <span class="toggle-eye">👁️</span>
+</div>
 
   <!-- LOGIN BUTTON -->
   <button class="auth-btn" id="login-btn">Login</button>
@@ -39,20 +39,6 @@
 
     <!-- PAGE KA SAARA HTML UPAR -->
 
-<script>
-    document.querySelectorAll(".toggle-eye").forEach(eye => {
-        eye.addEventListener("click", function () {
-            const input = this.previousElementSibling;
-            if (input.type === "password") {
-                input.type = "text";
-                this.textContent = "🙈";
-            } else {
-                input.type = "password";
-                this.textContent = "👁️";
-            }
-        });
-    });
-    </script>
     <script src="script.js"></script>
 
 </body>
