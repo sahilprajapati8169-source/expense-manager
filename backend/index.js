@@ -13,8 +13,10 @@ const app = express();
 
 // middlewares
 app.use(cors({
-  origin: "https://fluffy-peony-3a5444.netlify.app",
-  methods: ["GET","POST","PUT","DELETE"],
+  origin: [
+    "https://fluffy-peony-3a5444.netlify.app",
+    "https://expense-manager-sigma-sandy.vercel.app"
+  ],
   credentials: true
 }));
 app.use(express.json());
