@@ -37,8 +37,8 @@ router.post(
   .withMessage("Password must contain special character"),
 
   body("mobile")
-  .matches(/^[6-9]\d{9}$/)
-  .withMessage("Invalid Indian mobile number")
+.matches(/^(\+91)?[6-9]\d{9}$/)
+.withMessage("Invalid Indian mobile number")
 
 ],
 
