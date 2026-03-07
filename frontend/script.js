@@ -129,8 +129,13 @@ function initApp() {
     updateSummary();
     renderTransactions();
     initCharts();
-    renderCategoryCharts(getCategorySummary());
-  }
+    updateCategoryCharts();
+
+    const filter = document.getElementById("category-time-filter");
+    if (filter) {
+      filter.addEventListener("change", updateCategoryCharts);
+    }
+}
    else if (window.location.pathname.includes('setting.html')) {
     loadSettings();
   }
@@ -354,7 +359,7 @@ async function loadExpensesFromBackend() {
     if (window.location.pathname.includes('dashboard.html')) {
       updateOverviewChart();
       updateGrowthChart();
-      renderCategoryCharts(getCategorySummary());
+      updateCategoryCharts();
     }
   } catch (err) {
     console.error("❌ Failed to load expenses", err);
@@ -888,6 +893,48 @@ function getCategorySummary() {
       limit: categoryLimits[cat] || 0
     };
   });
+}
+
+
+function updateCategoryCharts() {
+  const filter = document.getElementById("category-time-filter")?.value || "monthly";
+
+  const now = new Date();
+
+  const filteredExpenses = expenses.filter(exp => {
+    const date = new Date(exp.date);
+
+    if (filter === "weekly") {
+      const weekAgo = new Date();
+      weekAgo.setDate(now.getDate() - 7);
+      return date >= weekAgo;
+    }
+
+    if (filter === "monthly") {
+      return date.getMonth() === now.getMonth() &&
+             date.getFullYear() === now.getFullYear();
+    }
+
+    if (filter === "yearly") {
+      return date.getFullYear() === now.getFullYear();
+    }
+
+    return true;
+  });
+
+  const summary = categories.map(cat => {
+    const spent = filteredExpenses
+      .filter(e => e.category === cat)
+      .reduce((sum, e) => sum + e.amount, 0);
+
+    return {
+      name: cat,
+      spent,
+      limit: categoryLimits[cat] || 0
+    };
+  });
+
+  renderCategoryCharts(summary);
 }
 
 function renderCategoryCharts(categoryData) {
