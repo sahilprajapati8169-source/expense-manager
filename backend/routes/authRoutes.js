@@ -153,11 +153,19 @@ await user.save();
 const link =
 `https://yourfrontend/reset-password.html?token=${token}`;
 
+try {
+
 await sendEmail(
 email,
 "Password Reset",
 `Click this link to reset password: ${link}`
 );
+
+} catch (err) {
+
+console.log("Email send failed", err);
+
+}
 
 res.json({message:"Reset link sent to email"});
 
