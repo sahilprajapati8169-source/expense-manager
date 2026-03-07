@@ -5,6 +5,8 @@ const API =
 
     const categories = ['Food', 'Travel', 'Rent', 'Shopping', 'Bills', 'Others'];
 
+    let selectedMonth = new Date();
+
 let isAddingExpense = false; // ✅ DUPLICATE ROKNE KE LIYE
 
 // 🔐 AUTH GUARD (GLOBAL)
@@ -109,7 +111,28 @@ function initApp() {
       e.preventDefault();
     });
   }
+const monthInput = document.getElementById("month-filter");
 
+if (monthInput) {
+
+  const now = new Date();
+
+  monthInput.value =
+    now.getFullYear() +
+    "-" +
+    String(now.getMonth() + 1).padStart(2, "0");
+
+  monthInput.addEventListener("change", () => {
+
+    selectedMonth = new Date(monthInput.value);
+
+    updateSummary();
+    updateCategoryCharts();
+    updateOverviewChart();
+
+  });
+
+}
   // Initialize phone input for signup (FIXED ID)
   const phoneInputField = document.getElementById("signup-mobile");
   if (phoneInputField) {
@@ -334,13 +357,35 @@ function animateValue(id, start, end, duration = 800) {
 }
 
 // Update Summary Cards
+  function getCurrentMonthExpenses() {
+
+  return expenses.filter(exp => {
+
+    const d = new Date(exp.date);
+
+    return (
+      d.getMonth() === selectedMonth.getMonth() &&
+      d.getFullYear() === selectedMonth.getFullYear()
+    );
+
+  });
+
+}
 function updateSummary() {
-  const totalExpense = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+
+  const filtered = getCurrentMonthExpenses();
+
+  const totalExpense = filtered.reduce(
+    (sum, exp) => sum + exp.amount,
+    0
+  );
+
   animateValue("total-expense", 0, totalExpense);
+
   animateValue("balance", 0, totalLimit - totalExpense);
+
   animateValue("total-limit", 0, totalLimit);
 }
-
 async function loadExpensesFromBackend() {
   const token = localStorage.getItem("token");
   if (!token) return;
