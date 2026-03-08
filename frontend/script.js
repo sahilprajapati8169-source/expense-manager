@@ -3,6 +3,17 @@ const API =
     ? "http://localhost:5000"
     : "https://expense-manager-backend-2z6k.onrender.com";
 
+  // GOOGLE LOGIN TOKEN FIX
+const urlParams = new URLSearchParams(window.location.search);
+const googleToken = urlParams.get("token");
+
+if (googleToken) {
+  localStorage.setItem("token", googleToken);
+
+  // URL clean कर दो
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
+
     const categories = ['Food', 'Travel', 'Rent', 'Shopping', 'Bills', 'Others'];
 
     let selectedMonth = new Date();
