@@ -3696,3 +3696,92 @@ h2 {
 .filter-icon {
   font-size: 16px;
 }
+
+/* HEADER */
+
+.trash-header{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:25px;
+}
+
+.back-btn{
+background:linear-gradient(135deg,#667eea,#764ba2);
+border:none;
+color:white;
+padding:8px 16px;
+border-radius:8px;
+cursor:pointer;
+font-weight:500;
+transition:0.2s;
+}
+
+.back-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 6px 15px rgba(0,0,0,0.2);
+}
+
+
+/* CONTAINER */
+
+.trash-container{
+background:white;
+padding:25px;
+border-radius:14px;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+
+/* TABLE */
+
+.trash-table{
+width:100%;
+border-collapse:separate;
+border-spacing:0 12px;
+}
+
+.trash-table th{
+text-align:left;
+font-weight:600;
+color:#555;
+padding:10px;
+}
+
+.trash-table td{
+background:#f9fafc;
+padding:14px;
+border-radius:8px;
+}
+
+
+/* ACTION BUTTONS */
+
+.restore-btn{
+background:#22c55e;
+border:none;
+padding:7px 14px;
+color:white;
+border-radius:20px;
+cursor:pointer;
+font-size:13px;
+}
+
+.delete-btn{
+background:#ef4444;
+border:none;
+padding:7px 14px;
+color:white;
+border-radius:20px;
+cursor:pointer;
+font-size:13px;
+margin-left:8px;
+}
+
+.restore-btn:hover{
+opacity:0.9;
+}
+
+.delete-btn:hover{
+opacity:0.9;
+}
