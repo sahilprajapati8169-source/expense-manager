@@ -1,3 +1,22 @@
+// PAGE LOADER
+window.addEventListener("load",()=>{
+
+const loader=document.getElementById("page-loader");
+
+if(loader){
+
+loader.style.transition="opacity 0.6s";
+
+loader.style.opacity="0";
+
+setTimeout(()=>{
+loader.style.display="none";
+},600);
+
+}
+
+});
+
 const API = 
   window.location.hostname === "localhost"
     ? "http://localhost:5000"
