@@ -139,7 +139,7 @@ router.get(
 passport.authenticate("google",{session:false}),
 (req,res)=>{
 
-res.redirect("https://expense-manager.vercel.app/dashboard.html");
+res.redirect("https://expense-manager-sigma-sandy.vercel.app/dashboard.html");
 
 }
 );
