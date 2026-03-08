@@ -139,7 +139,7 @@ router.get(
 passport.authenticate("google",{session:false}),
 (req,res)=>{
 
-res.redirect("https://fluffy-peony-3a5444.netlify.app/dashboard.html");
+res.redirect("https://expense-manager.vercel.app/dashboard.html");
 
 }
 );
