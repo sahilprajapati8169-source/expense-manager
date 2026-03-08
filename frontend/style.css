@@ -3632,3 +3632,38 @@ h2 {
   width: auto;
   margin: 0;
 }
+
+.month-filter-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  padding: 10px 16px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 20px;
+}
+
+.month-filter-box label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+}
+
+.month-filter-box input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+}
+
+.month-filter-box:hover {
+  box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+}
+
+.month-icon {
+  font-size: 18px;
+}
