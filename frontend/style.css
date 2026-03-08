@@ -3667,3 +3667,32 @@ h2 {
 .month-icon {
   font-size: 18px;
 }
+
+.category-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  padding: 6px 12px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 15px;
+}
+
+.category-filter select {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+}
+
+.category-filter:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.filter-icon {
+  font-size: 16px;
+}
