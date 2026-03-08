@@ -20,10 +20,9 @@ const userSchema = new mongoose.Schema({
   },
 
   mobile: {
-    type: String,
-    required: true,
-    unique: true
-  },
+  type: String,
+  default: ""
+},
 
   country: {
     type: String

@@ -20,10 +20,12 @@ passport.use(
 
         if (!user) {
           user = await User.create({
-            name: profile.displayName,
-            email: email,
-            password: "google-auth"
-          });
+  name: profile.displayName,
+  email: email,
+  password: "google-auth-user",
+  mobile: "",
+  country: ""
+});
         }
 
         return done(null, user);
