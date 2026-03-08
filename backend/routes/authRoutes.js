@@ -139,7 +139,17 @@ router.get(
 passport.authenticate("google",{session:false}),
 (req,res)=>{
 
-res.redirect("https://expense-manager-sigma-sandy.vercel.app/dashboard.html");
+const jwt = require("jsonwebtoken");
+
+const token = jwt.sign(
+{ userId: req.user._id },
+process.env.JWT_SECRET,
+{ expiresIn:"7d" }
+);
+
+res.redirect(
+`https://expense-manager-sigma-sandy.vercel.app/dashboard.html?token=${token}`
+);
 
 }
 );
