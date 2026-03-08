@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const authMiddleware = require("../middleware/auth");
+const passport = require("../config/passport");
 
 const router = express.Router(); // ✅ router FIRST
 
@@ -125,6 +126,24 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+router.get(
+"/google",
+passport.authenticate("google", {
+scope:["profile","email"]
+})
+);
+
+router.get(
+"/google/callback",
+passport.authenticate("google",{session:false}),
+(req,res)=>{
+
+res.redirect("https://fluffy-peony-3a5444.netlify.app/dashboard.html");
+
+}
+);
+
 
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");

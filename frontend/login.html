@@ -25,6 +25,9 @@
 
   <!-- LOGIN BUTTON -->
   <button class="auth-btn" id="login-btn">Login</button>
+  <button class="google-btn" onclick="googleLogin()">
+  Continue with Google
+</button>
 
   <p class="auth-link">
   <a href="forgot-password.html">Forgot password?</a>
@@ -38,7 +41,12 @@
 
 
     <!-- PAGE KA SAARA HTML UPAR -->
-
+<script>
+function googleLogin(){
+  window.location.href =
+  "https://expense-manager-backend-2z6k.onrender.com/api/auth/google";
+}
+</script>
     <script src="script.js"></script>
 
 </body>

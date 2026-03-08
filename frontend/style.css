@@ -3785,3 +3785,13 @@ opacity:0.9;
 .delete-btn:hover{
 opacity:0.9;
 }
+
+.google-btn{
+width:100%;
+padding:10px;
+margin-top:10px;
+background:#fff;
+border:1px solid #ddd;
+cursor:pointer;
+font-weight:500;
+}
