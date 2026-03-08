@@ -615,12 +615,14 @@ body {
 }
 
 /* ===== BODY ===== */
-.auth-body {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.auth-body{
+font-family:Poppins;
+background:linear-gradient(135deg,#6a7cff,#9f7aea);
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 }
 
 /* ===== LOGIN BOX ===== */
@@ -3978,6 +3980,28 @@ font-size:14px;
 margin:0 10px;
 color:#6a7cff;
 text-decoration:none;
+}
+
+.footer a:hover{
+text-decoration:underline;
+}
+
+.footer{
+position:absolute;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:rgba(0,0,0,0.6);
+padding:10px 20px;
+border-radius:10px;
+backdrop-filter:blur(8px);
+}
+
+.footer a{
+color:#9bb0ff;
+margin:0 10px;
+text-decoration:none;
+font-size:14px;
 }
 
 .footer a:hover{
