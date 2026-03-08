@@ -1262,16 +1262,43 @@ function loadSettings() {
   document.getElementById("set-country").value = user.country;
 }
 
-function saveProfile() {
-  const user = JSON.parse(localStorage.getItem("userData"));
-  if (!user) return;
+async function saveProfile(){
 
-  user.name = document.getElementById("set-name").value.trim();
-  user.mobile = document.getElementById("set-mobile").value.trim();
-  user.country = document.getElementById("set-country").value.trim();
+const token = localStorage.getItem("token");
 
-  localStorage.setItem("userData", JSON.stringify(user));
-  alert("Profile updated successfully ✅");
+const name = document.getElementById("set-name").value.trim();
+const mobile = document.getElementById("set-mobile").value.trim();
+const country = document.getElementById("set-country").value.trim();
+
+try{
+
+const res = await fetch(`${API}/api/auth/update-profile`,{
+method:"PUT",
+headers:{
+"Content-Type":"application/json",
+Authorization:`Bearer ${token}`
+},
+body:JSON.stringify({
+name,
+mobile,
+country
+})
+});
+
+const data = await res.json();
+
+localStorage.setItem("userData",JSON.stringify(data.user));
+
+alert("Profile updated successfully ✅");
+
+window.location.href="dashboard.html";
+
+}catch(err){
+
+alert("Failed to update profile");
+
+}
+
 }
 
 // Clear All Data

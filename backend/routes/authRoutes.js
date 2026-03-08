@@ -238,6 +238,33 @@ message:"Password must be at least 8 characters"
     res.status(500).json({ message: "Server error" });
   }
 });
+
+// ================= UPDATE PROFILE =================
+router.put("/update-profile", authMiddleware, async (req,res)=>{
+
+try{
+
+const { name, mobile, country } = req.body;
+
+const user = await User.findByIdAndUpdate(
+req.user.id,
+{ name, mobile, country },
+{ new:true }
+);
+
+res.json({
+message:"Profile updated",
+user
+});
+
+}catch(err){
+
+console.log(err);
+res.status(500).json({message:"Server error"});
+
+}
+
+});
 // ================= ME =================
 router.get("/me", authMiddleware, async (req, res) => {
   const user = await User.findById(req.user.id).select("-password");
