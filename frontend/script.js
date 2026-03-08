@@ -41,8 +41,20 @@ async function checkAuth() {
     }
 
     const user = await res.json();
-    localStorage.setItem("userData", JSON.stringify(user));
-    await loadLimitsFromBackend();
+
+localStorage.setItem("userData", JSON.stringify(user));
+
+if (!user.mobile || !user.country) {
+
+  const popup = document.getElementById("profile-popup-required");
+
+  if (popup) {
+    popup.style.display = "flex";
+  }
+
+}
+
+await loadLimitsFromBackend();
 
   } catch (err) {
     console.warn("🔒 Auth failed, logging out");
@@ -1693,3 +1705,6 @@ document.addEventListener("DOMContentLoaded", () => {
 // Event Listeners
 document.addEventListener("input", updateRemaining);
 
+function goToSettings(){
+window.location.href = "setting.html";
+}
